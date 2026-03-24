@@ -1,0 +1,42 @@
+// Global error handler — must be registered LAST in server.js
+// Express identifies it as an error handler because it has 4 params (err, req, res, next)
+
+function errorHandler(err, req, res, next) {
+  // Log full error to console for debugging
+  console.error(`[ERROR] ${req.method} ${req.path}:`, err.message);
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(err.stack);
+  }
+
+  // Handle specific known error types
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: err.message
+    });
+  }
+
+  if (err.name === 'UnauthorizedError') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  if (err.code === 'SQLITE_CONSTRAINT') {
+    return res.status(409).json({ error: 'Duplicate entry — resource already exists' });
+  }
+
+  // Default: internal server error
+  const status  = err.status || 500;
+  const message = err.expose ? err.message : 'Internal server error';
+
+  res.status(status).json({ error: message });
+}
+
+// Helper to create errors with a status code and expose flag
+function createError(status, message) {
+  const err    = new Error(message);
+  err.status   = status;
+  err.expose   = true;
+  return err;
+}
+
+module.exports = { errorHandler, createError };
