@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/armorup.css">
+    <title>ShieldHer | ArmorUp</title>
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-bar">
+            <a href="index.html" class="back-link">← Home</a>
+            <h1 class="screen-title">ArmorUp</h1>
+            <span class="badge" id="alert-count">0</span>
+        </header>
+
+        <main class="content-area">
+            <div class="card status-card">
+                <div>
+                    <strong>Monitoring Active</strong>
+                    <p class="text-2">Scanning platforms...</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item"><strong id="stat-active">0</strong><p>Active</p></div>
+                <div class="stat-item"><strong>4</strong><p>Platforms</p></div>
+                <div class="stat-item"><strong id="stat-resolved">0</strong><p>Resolved</p></div>
+            </div>
+
+            <div id="threat-feed-container">
+                </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="safetrace.html" class="nav-item">SafeTrace</a>
+            <a href="armorup.html" class="nav-item active">ArmorUp</a>
+            <a href="profile.html" class="nav-item">Profile</a>
+        </nav>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/armorup.js"></script>
+</body>
+</html>

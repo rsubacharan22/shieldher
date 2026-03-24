@@ -1,0 +1,41 @@
+.dark-card {
+    background: var(--accent);
+    color: white;
+}
+
+.score-display {
+    display: flex;
+    align-items: baseline;
+    margin: 15px 0;
+}
+
+.score-display h1 {
+    font-family: 'DM Mono', monospace;
+    font-size: 48px;
+}
+
+.score-total { color: var(--text-3); margin-left: 5px; }
+
+.progress-container {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: white;
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+}
+
+.stats-grid-mini {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 15px;
+}
+
+.stat span { font-family: 'DM Mono'; font-weight: bold; }
+.stat p { font-size: 10px; color: var(--text-3); text-transform: uppercase; }

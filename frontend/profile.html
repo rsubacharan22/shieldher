@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/shared.css">
+    <title>ShieldHer | Profile</title>
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-bar">
+            <span></span>
+            <h1 class="screen-title">Settings</h1>
+            <span></span>
+        </header>
+
+        <main class="content-area">
+            <div class="card">
+                <h3>Personal Info</h3>
+                <p class="text-2" id="user-name">Loading...</p>
+                <p class="text-3" id="user-email">Loading...</p>
+                <button class="btn-secondary" style="margin-top: 10px;">Edit Profile</button>
+            </div>
+
+            <div class="card">
+                <h3>Preferences</h3>
+                <div class="setting-row">
+                    <span>Weekly Auto-Scan</span>
+                    <input type="checkbox" checked>
+                </div>
+                <div class="setting-row">
+                    <span>Push Notifications</span>
+                    <input type="checkbox" checked>
+                </div>
+            </div>
+
+            <button class="btn-secondary" onclick="logout()" style="margin-top: 20px;">Logout</button>
+            <button class="btn-primary" style="background: var(--red); margin-top: 10px;">Delete Account</button>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="safetrace.html" class="nav-item">SafeTrace</a>
+            <a href="armorup.html" class="nav-item">ArmorUp</a>
+            <a href="profile.html" class="nav-item active">Profile</a>
+        </nav>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('shieldher_token');
+            window.location.href = 'onboarding.html';
+        }
+    </script>
+</body>
+</html>

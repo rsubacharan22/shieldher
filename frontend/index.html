@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <title>ShieldHer | Dashboard</title>
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-bar">
+            <div class="logo">SHIELDHER</div>
+            <a href="profile.html" class="avatar-link">
+                <div class="avatar" id="user-avatar"></div>
+            </a>
+        </header>
+
+        <main class="content-area">
+            <div class="greeting">
+                <h2 id="greeting-text">Good morning, User</h2>
+            </div>
+
+            <div class="card dark-card">
+                <div class="score-header">
+                    <span class="text-3">Privacy Risk Score</span>
+                    <span class="trend-pill">-4% this week</span>
+                </div>
+                <div class="score-display">
+                    <h1 id="risk-score">34</h1>
+                    <span class="score-total">/ 100</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="score-bar" style="width: 34%"></div>
+                </div>
+                <div class="stats-grid-mini">
+                    <div class="stat"><span id="stat-exposures">3</span><p>Exposures</p></div>
+                    <div class="stat"><span id="stat-threats">2</span><p>Threats</p></div>
+                    <div class="stat"><span id="stat-removed">5</span><p>Removed</p></div>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <a href="safetrace.html" class="card feature-card">
+                    <h3>SafeTrace</h3>
+                    <p class="text-2">Data exposure</p>
+                    <span class="pill pill-amber">3 sites</span>
+                </a>
+                <a href="armorup.html" class="card feature-card">
+                    <h3>ArmorUp</h3>
+                    <p class="text-2">Threat feed</p>
+                    <span class="pill pill-red">2 alerts</span>
+                </a>
+            </div>
+
+            <section class="recent-alerts">
+                <h3 class="section-title">Recent Alerts</h3>
+                <div id="alerts-list">
+                    </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item active">Home</a>
+            <a href="safetrace.html" class="nav-item">SafeTrace</a>
+            <a href="armorup.html" class="nav-item">ArmorUp</a>
+            <a href="profile.html" class="nav-item">Profile</a>
+        </nav>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

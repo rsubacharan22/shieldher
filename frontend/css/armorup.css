@@ -1,0 +1,91 @@
+/* --- Status Card --- */
+.status-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* --- Stats Grid --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.stat-item {
+    background: var(--surface-2);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+}
+
+.stat-item strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    display: block;
+}
+
+.stat-item p {
+    font-size: 10px;
+    color: var(--text-3);
+    text-transform: uppercase;
+}
+
+/* --- Threat Feed Cards --- */
+.threat-card {
+    margin-bottom: 15px;
+    padding: 16px;
+}
+
+.threat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.threat-content {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 15px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- Toggle Switch (for Monitoring) --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.switch input { opacity: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--border);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: var(--text); }
+input:checked + .slider:before { transform: translateX(18px); }

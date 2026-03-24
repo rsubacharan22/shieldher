@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/onboarding.css">
+    <title>Join ShieldHer</title>
+</head>
+<body>
+    <div class="app-container">
+        <div class="step-pills">
+            <div id="pill-1" class="step active"></div>
+            <div id="pill-2" class="step"></div>
+            <div id="pill-3" class="step"></div>
+        </div>
+
+        <main class="content-area centered">
+            <section id="step-1" class="onboard-section">
+                <h2>Create Account</h2>
+                <input type="text" id="name" placeholder="Full Name">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="pass" placeholder="Password">
+                <button class="btn-primary" id="btn-step-1">Continue</button>
+            </section>
+
+            <section id="step-2" class="onboard-section hidden">
+                <h2>Scan Details</h2>
+                <input type="tel" id="phone" placeholder="Phone Number">
+                <input type="text" id="city" placeholder="City, State">
+                <button class="btn-primary" id="btn-step-2">Save & Continue</button>
+            </section>
+
+            <section id="step-3" class="onboard-section hidden">
+                <div class="success-circle">✓</div>
+                <h2>Ready to Scan</h2>
+                <button class="btn-primary" id="btn-finish">Go to Dashboard</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/onboarding.js"></script>
+</body>
+</html>

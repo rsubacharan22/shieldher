@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/safetrace.css">
+    <title>ShieldHer | SafeTrace</title>
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-bar">
+            <a href="index.html" class="back-link">← Home</a>
+            <div class="step-indicator">SafeTrace</div>
+            <span></span>
+        </header>
+
+        <div class="step-pills">
+            <div class="step active" id="sp-1"></div>
+            <div class="step" id="sp-2"></div>
+            <div class="step" id="sp-3"></div>
+            <div class="step" id="sp-4"></div>
+        </div>
+
+        <main class="content-area">
+            <section id="trace-step-1" class="trace-section">
+                <div class="scan-visual">
+                    <div class="pulse-circle"></div>
+                    <div class="scan-count" id="sources-checked">0</div>
+                    <div class="scan-label">Sources Scanned</div>
+                </div>
+                <div class="category-list" id="scan-categories">
+                    </div>
+                <button class="btn-primary" id="btn-view-results" disabled>Scanning...</button>
+            </section>
+
+            <section id="trace-step-2" class="trace-section hidden">
+                <div class="results-summary card">
+                    <strong>3 Exposures Found</strong>
+                    <p class="text-2">Data brokers holding your info.</p>
+                </div>
+                <div id="broker-list"></div>
+                <button class="btn-primary" onclick="goToStep(3)">Analysis →</button>
+            </section>
+
+            <section id="trace-step-3" class="trace-section hidden">
+                <h3>Risk Breakdown</h3>
+                <canvas id="riskChart" width="380" height="200"></canvas>
+                <div class="legend" id="chart-legend"></div>
+                <button class="btn-primary" onclick="goToStep(4)">Start Removal →</button>
+            </section>
+
+            <section id="trace-step-4" class="trace-section hidden">
+                <h3>Request Removal</h3>
+                <div id="removal-list"></div>
+                <button class="btn-primary" id="btn-remove-all">Send All Requests</button>
+                <div class="card info-card" style="margin-top:20px;">
+                    <p class="text-3">We use GDPR/CCPA protocols to force these sites to delete your data.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/safetrace.js"></script>
+</body>
+</html>
