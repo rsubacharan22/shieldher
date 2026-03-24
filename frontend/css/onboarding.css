@@ -1,0 +1,47 @@
+.step-pills {
+    display: flex;
+    gap: 8px;
+    padding: 20px;
+}
+
+.step {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+}
+
+.step.active { background: var(--accent); }
+.step.done { background: var(--accent); opacity: 0.3; }
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.onboard-section h2 { margin-bottom: 10px; }
+
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.success-circle {
+    width: 80px;
+    height: 80px;
+    background: var(--green-bg);
+    color: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin: 0 auto 20px;
+}
