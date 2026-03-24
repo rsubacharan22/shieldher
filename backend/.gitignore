@@ -1,0 +1,8 @@
+
+node_modules/
+
+# Environment variables
+.env
+
+# Database files (You don't want to upload your local testing database)
+safetrace.db
