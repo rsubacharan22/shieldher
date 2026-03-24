@@ -1,0 +1,66 @@
+-- Enable foreign key support (run via PRAGMA in db/index.js)
+
+-- Users table
+CREATE TABLE IF NOT EXISTS users (
+  id          TEXT PRIMARY KEY,
+  email       TEXT UNIQUE NOT NULL,
+  password    TEXT NOT NULL,
+  name        TEXT,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Personal data to scan (kept separate from auth for privacy)
+CREATE TABLE IF NOT EXISTS user_data (
+  id          TEXT PRIMARY KEY,
+  user_id     TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  full_name   TEXT,
+  phone       TEXT,
+  city        TEXT,
+  dob         TEXT,
+  updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Scan runs
+CREATE TABLE IF NOT EXISTS scans (
+  id              TEXT PRIMARY KEY,
+  user_id         TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  status          TEXT DEFAULT 'running',
+  sources_checked INTEGER DEFAULT 0,
+  risk_score      INTEGER DEFAULT 0,
+  started_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  finished_at     DATETIME
+);
+
+-- Individual exposures found during a scan
+CREATE TABLE IF NOT EXISTS exposures (
+  id          TEXT PRIMARY KEY,
+  scan_id     TEXT NOT NULL REFERENCES scans(id) ON DELETE CASCADE,
+  user_id     TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  source      TEXT NOT NULL,
+  data_found  TEXT,
+  severity    TEXT DEFAULT 'low',
+  url         TEXT,
+  found_at    DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Removal requests
+CREATE TABLE IF NOT EXISTS removals (
+  id            TEXT PRIMARY KEY,
+  exposure_id   TEXT NOT NULL REFERENCES exposures(id) ON DELETE CASCADE,
+  user_id       TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  status        TEXT DEFAULT 'pending',
+  sent_at       DATETIME,
+  confirmed_at  DATETIME
+);
+
+-- ArmorUp threats
+CREATE TABLE IF NOT EXISTS threats (
+  id          TEXT PRIMARY KEY,
+  user_id     TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  platform    TEXT NOT NULL,
+  type        TEXT NOT NULL,
+  content     TEXT,
+  severity    TEXT DEFAULT 'low',
+  resolved    INTEGER DEFAULT 0,
+  detected_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

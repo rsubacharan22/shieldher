@@ -1,0 +1,77 @@
+const { run, get, all } = require('../index');
+const { v4: uuidv4 }   = require('uuid');
+
+const Removal = {
+
+  // Create a new removal request for an exposure
+  async create({ exposure_id, user_id }) {
+    // Prevent duplicate requests for the same exposure
+    const existing = await get(
+      `SELECT id FROM removals WHERE exposure_id = ? AND user_id = ?`,
+      [exposure_id, user_id]
+    );
+    if (existing) return existing.id;
+
+    const id = uuidv4();
+    await run(
+      `INSERT INTO removals (id, exposure_id, user_id, status) VALUES (?, ?, ?, 'pending')`,
+      [id, exposure_id, user_id]
+    );
+    return id;
+  },
+
+  // Mark a removal as sent (request submitted to broker)
+  async markSent(id) {
+    return run(
+      `UPDATE removals SET status='sent', sent_at=CURRENT_TIMESTAMP WHERE id=?`,
+      [id]
+    );
+  },
+
+  // Mark a removal as confirmed (broker confirmed deletion)
+  async markConfirmed(id) {
+    return run(
+      `UPDATE removals SET status='confirmed', confirmed_at=CURRENT_TIMESTAMP WHERE id=?`,
+      [id]
+    );
+  },
+
+  // Mark a removal as failed
+  async markFailed(id) {
+    return run(`UPDATE removals SET status='failed' WHERE id=?`, [id]);
+  },
+
+  // Get all removals for a user with exposure info joined
+  async getByUser(user_id) {
+    return all(
+      `SELECT r.*, e.source, e.data_found, e.severity
+       FROM removals r
+       JOIN exposures e ON r.exposure_id = e.id
+       WHERE r.user_id = ?
+       ORDER BY r.sent_at DESC`,
+      [user_id]
+    );
+  },
+
+  // Get a single removal by id
+  async getById(id) {
+    return get(`SELECT * FROM removals WHERE id = ?`, [id]);
+  },
+
+  // Get all pending removals (for background retry jobs)
+  async getPending() {
+    return all(`SELECT * FROM removals WHERE status = 'pending'`);
+  },
+
+  // Count confirmed removals for a user
+  async countConfirmed(user_id) {
+    const row = await get(
+      `SELECT COUNT(*) as count FROM removals WHERE user_id=? AND status='confirmed'`,
+      [user_id]
+    );
+    return row ? row.count : 0;
+  }
+
+};
+
+module.exports = Removal;

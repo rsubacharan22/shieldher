@@ -1,0 +1,36 @@
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
+const fs = require('fs');
+
+// Define paths for the database file and the schema
+const dbPath = path.resolve(__dirname, 'safetrace.db');
+const schemaPath = path.resolve(__dirname, 'schema.sql');
+
+// Initialize the database connection
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error('🔥 Database connection error:', err.message);
+    } else {
+        console.log('✅ Connected to SQLite database.');
+        initDb();
+    }
+});
+
+// Function to read and execute the schema.sql file
+function initDb() {
+    try {
+        const schema = fs.readFileSync(schemaPath, 'utf8');
+        db.exec(schema, (err) => {
+            if (err) {
+                console.error('🔥 Failed to initialize schema:', err.message);
+            } else {
+                console.log('✅ Database schema applied successfully.');
+            }
+        });
+    } catch (err) {
+        console.error('🔥 Could not read schema.sql file. Make sure it exists in the db/ folder:', err.message);
+    }
+}
+
+// Export the database instance so other files can use it to run queries
+module.exports = db;

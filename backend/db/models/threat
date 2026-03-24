@@ -1,0 +1,80 @@
+const { run, get, all } = require('../index');
+const { v4: uuidv4 }   = require('uuid');
+
+const Threat = {
+
+  // Insert a newly detected threat
+  async insert({ user_id, platform, type, content, severity }) {
+    const id = uuidv4();
+    await run(
+      `INSERT INTO threats (id, user_id, platform, type, content, severity)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [id, user_id, platform, type, content, severity]
+    );
+    return id;
+  },
+
+  // Get all threats for a user, newest first
+  async getByUser(user_id) {
+    return all(
+      `SELECT * FROM threats WHERE user_id = ?
+       ORDER BY
+         CASE severity WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END,
+         detected_at DESC`,
+      [user_id]
+    );
+  },
+
+  // Get only unresolved threats for a user
+  async getActive(user_id) {
+    return all(
+      `SELECT * FROM threats WHERE user_id = ? AND resolved = 0
+       ORDER BY detected_at DESC`,
+      [user_id]
+    );
+  },
+
+  // Get a single threat by id
+  async getById(id) {
+    return get(`SELECT * FROM threats WHERE id = ?`, [id]);
+  },
+
+  // Mark a threat as resolved
+  async markResolved(id, user_id) {
+    return run(
+      `UPDATE threats SET resolved = 1 WHERE id = ? AND user_id = ?`,
+      [id, user_id]
+    );
+  },
+
+  // Count active (unresolved) threats for a user
+  async countActive(user_id) {
+    const row = await get(
+      `SELECT COUNT(*) as count FROM threats WHERE user_id=? AND resolved=0`,
+      [user_id]
+    );
+    return row ? row.count : 0;
+  },
+
+  // Count threats resolved this week
+  async countResolvedThisWeek(user_id) {
+    const row = await get(
+      `SELECT COUNT(*) as count FROM threats
+       WHERE user_id=? AND resolved=1
+       AND detected_at >= datetime('now', '-7 days')`,
+      [user_id]
+    );
+    return row ? row.count : 0;
+  },
+
+  // Get threats by platform for a user
+  async getByPlatform(user_id, platform) {
+    return all(
+      `SELECT * FROM threats WHERE user_id=? AND platform=? ORDER BY detected_at DESC`,
+      [user_id, platform]
+    );
+  }
+
+};
+
+module.exports = Threat;
